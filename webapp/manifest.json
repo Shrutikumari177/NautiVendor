@@ -1,0 +1,151 @@
+{
+    "_version": "1.59.0",
+    "sap.app": {
+        "id": "com.ingenx.nauti.nauticalvendor",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.13.1",
+            "toolsId": "9bcd2e4e-9d85-4745-9a1d-59dc40bb9860"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/nauti/VENDOR_BTP_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/mainService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "MASTER_BTP_SRV_Annotation": {
+                "uri": "/destinations/Ingenx_OData_SAP/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FNAUTI%2FMASTER_BTP_ANNO_MDL',Version='0001')/$value/",
+                "type": "ODataAnnotation",
+                "settings": {
+                    "localUri": "localService/MASTER_BTP_SRV/MASTER_BTP_SRV_Annotation.xml"
+                }
+            },
+            "MASTER_BTP_SRV": {
+                "uri": "/sap/opu/odata/nauti/MASTER_BTP_SRV",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "MASTER_BTP_SRV_Annotation"
+                    ],
+                    "localUri": "localService/MASTER_BTP_SRV/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.122.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.ingenx.nauti.nauticalvendor.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            },
+            "MASTER_BTP_SRV": {
+                "dataSource": "MASTER_BTP_SRV",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "metadataUrlParams": {
+                        "sap-value-list": "none"
+                    }
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.ingenx.nauti.nauticalvendor.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteBusinessPartner",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetBusinessPartner"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetBusinessPartner": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "BusinessPartner",
+                    "viewName": "BusinessPartner"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.ingenx.nauti.nauticalvendor.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    }
+}

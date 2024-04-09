@@ -1,0 +1,49 @@
+specVersion: "3.1"
+metadata:
+  name: com.ingenx.nauti.nauticalvendor
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+        backend:
+          - path: /sap
+            url: http://ingenxsrv:8001
+            client: "150"
+            destination: Ingenx_OData_SAP
+          - path: /sap
+            url: http://ingenxsrv:8001
+            client: "150"
+            destination: Ingenx_OData_SAP
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata/nauti/VENDOR_BTP_SRV
+            metadataPath: ./webapp/localService/metadata.xml
+            mockdataPath: ./webapp/localService/data
+            generateMockData: true
+        annotations: []
+        service:
+          - urlPath: /sap/opu/odata/nauti/VENDOR_BTP_SRV
+            generateMockData: true
+            metadataXmlPath: ./webapp/localService/mainService/metadata.xml
+            mockdataRootPath: ./webapp/localService/data
+          - urlPath: /sap/opu/odata/nauti/MASTER_BTP_SRV
+            metadataXmlPath: ./webapp/localService/MASTER_BTP_SRV/metadata.xml
+            mockdataRootPath: ./webapp/localService/MASTER_BTP_SRV/mockdata
+            generateMockData: true
