@@ -33,7 +33,7 @@ function (Controller, MessageBox) {
             
         },
 
-        onSubmit : function(oEvent){
+     onSubmit : function(oEvent){
         //   let payLoad  = {
         //        "Lifnr" : "",
         // "PartnerRole" : "",
@@ -56,14 +56,16 @@ function (Controller, MessageBox) {
         // "Telf2" : "",
         // "Telfx" : "",
         // "SmtpAddr" : "",
-        // "Erdat" : "",
+        // "Erdat" : null,
         // "DateTo" : null
       
         //   }
           let oModel = this.getOwnerComponent().getModel("MASTER_BTP_SRV");
           console.log("My model",oModel);
 
-          let payLoad = {  "Lifnr" : "2100000009",
+          let payLoad = { 
+            
+            "Lifnr" : "2100000009",
             "PartnerRole" : "",
             "Anred" : "Company",
             "Name1" : "The Shipping Corporation Of India",
@@ -88,32 +90,32 @@ function (Controller, MessageBox) {
             "DateTo" : null
           }
 
-          // for( let i=0; i< selectedDataArr.length ; i++){
-          //   // payLoad = {
-          //   //   "Lifnr" : selectedDataArr[i].ReconciliationAccount,
-          //   //   "PartnerRole" : "",
-          //   //   "Anred" : "",
-          //   //   "Name1" : selectedDataArr[i].SupplierName,
-          //   //   "Name2" : "",
-          //   //   "Name3" : "",
-          //   //   "Sort1" : "",
-          //   //   "StrSuppl1" : "",
-          //   //   "StrSuppl2" : "",
-          //   //   "HouseNum1" : "",
-          //   //   "Stras" : selectedDataArr[i].StreetName,
-          //   //   "Pstlz" : selectedDataArr[i].PostalCode,
-          //   //   "Ort01" : selectedDataArr[i].CityName,
-          //   //   "Land1" : selectedDataArr[i].Country,
-          //   //   "Regio" : null,
-          //   //   "TimeZone" : null,
-          //   //   "Spras" : null,
-          //   //   "Telf1" : selectedDataArr[i].PhoneNumber1,
-          //   //   "Telf2" : selectedDataArr[i].PhoneNumber2,
-          //   //   "Telfx" : null,
-          //   //   "SmtpAddr" : null,
-          //   //   "Erdat" : null,
-          //   //   "DateTo" : null
-          //   // }
+          for( let i=0; i< selectedDataArr.length ; i++){
+            payLoad = {
+              "Lifnr" : selectedDataArr[i].Supplier,
+              "PartnerRole" : "",
+              "Anred" : "",
+              "Name1" : selectedDataArr[i].SupplierName,
+              "Name2" : "",
+              "Name3" : "",
+              "Sort1" : "",
+              "StrSuppl1" : "",
+              "StrSuppl2" : "",
+              "HouseNum1" : "",
+              "Stras" : selectedDataArr[i].StreetName,
+              "Pstlz" : selectedDataArr[i].PostalCode,
+              "Ort01" : selectedDataArr[i].CityName,
+              "Land1" : selectedDataArr[i].Country,
+              "Regio" : null,
+              "TimeZone" : null,
+              "Spras" : null,
+              "Telf1" : selectedDataArr[i].PhoneNumber1,
+              "Telf2" : selectedDataArr[i].PhoneNumber2,
+              "Telfx" : null,
+              "SmtpAddr" : null,
+              "Erdat" : null,
+              "DateTo" : null
+            }
 
           //   let payLoad = {  "Lifnr" : "2100000009",
           //   "PartnerRole" : "",
@@ -152,6 +154,7 @@ function (Controller, MessageBox) {
 
               
           // }
+          console.log(payLoad);
 
           oModel.create( "/BusinessPartnerSet", payLoad, {
             success : (data, response) =>{
@@ -163,6 +166,8 @@ function (Controller, MessageBox) {
             }
           })
         }
+      },
+   
     });
 });
  
